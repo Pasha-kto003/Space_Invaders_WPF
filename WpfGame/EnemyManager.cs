@@ -1,0 +1,129 @@
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace WpfGame
+{
+    public class EnemyManager
+    {
+        public List<Enemy> Enemies { get; private set; } = new List<Enemy>();
+        public double Direction { get; set; } = 1;
+        public bool BossFight { get; private set; }
+        public Boss Boss { get; private set; }
+        public bool IsBossAlive => Boss != null && Boss.Visual != null;
+
+        private Canvas gameCanvas;
+        private Random rnd = new Random();
+
+        public EnemyManager(Canvas canvas)
+        {
+            gameCanvas = canvas;
+        }
+
+        public void SpawnEnemiesForLevel(int level)
+        {
+            ClearEnemies();
+            BossFight = false;
+
+            if (level <= 3)
+            {
+                SpawnRegularEnemies(level);
+            }
+            else if (level == 4)
+            {
+                SpawnBoss();
+            }
+        }
+
+        private void SpawnRegularEnemies(int level)
+        {
+            int rows = 3 + level;
+            int cols = 6 + level;
+            double marginX = 20;
+            double marginY = 20;
+            double spacingX = (gameCanvas.ActualWidth - marginX * 2) / cols;
+            double spacingY = 40;
+
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
+                {
+                    var color = Color.FromRgb(
+                        (byte)(180 - level * 30),
+                        (byte)(100 + level * 30),
+                        (byte)(50 + level * 20)
+                    );
+
+                    var enemy = new Enemy(gameCanvas,
+                        marginX + c * spacingX,
+                        marginY + r * spacingY,
+                        level);
+
+                    Enemies.Add(enemy);
+                }
+            }
+        }
+
+        private void SpawnBoss()
+        {
+            BossFight = true;
+            Boss = new Boss(gameCanvas);
+        }
+
+        public void UpdateEnemies(double speed)
+        {
+            if (BossFight && IsBossAlive)
+            {
+                Boss.Update();
+                return;
+            }
+
+            if (Enemies.Count == 0) return;
+
+            double leftMost = Enemies.Min(en => Canvas.GetLeft(en.Visual));
+            double rightMost = Enemies.Max(en => Canvas.GetLeft(en.Visual) + en.Visual.Width);
+
+            if (rightMost >= gameCanvas.ActualWidth - 10 && Direction > 0) Direction = -1;
+            if (leftMost <= 10 && Direction < 0) Direction = 1;
+
+            foreach (var enemy in Enemies)
+            {
+                enemy.Move(Direction * speed);
+            }
+        }
+
+        public Enemy GetRandomShooter()
+        {
+            if (Enemies.Count == 0) return null;
+            return Enemies[rnd.Next(Enemies.Count)];
+        }
+
+        public void RemoveEnemy(Enemy enemy)
+        {
+            enemy.Remove(gameCanvas);
+            Enemies.Remove(enemy);
+        }
+
+        public void ClearEnemies()
+        {
+            foreach (var enemy in Enemies)
+            {
+                enemy.Remove(gameCanvas);
+            }
+            Enemies.Clear();
+
+            if (Boss != null)
+            {
+                Boss.Remove();
+                Boss = null;
+            }
+        }
+
+        public bool IsAnyEnemyNearPlayer(double playerY)
+        {
+            return Enemies.Any(enemy => Canvas.GetTop(enemy.Visual) + enemy.Visual.Height >= playerY - 10);
+        }
+    }
+}

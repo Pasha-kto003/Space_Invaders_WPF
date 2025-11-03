@@ -1,0 +1,19 @@
+﻿<Window x:Class="WpfGame.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfGame"
+        mc:Ignorable="d"
+        Title="Space Invaders - WPF" Height="720" Width="480" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/mrd7stj7vtv71.png" Stretch="Fill" Opacity="0.9"/>
+        </Grid.Background>
+        <Canvas Name="GameCanvas">
+            <!-- UI overlays -->
+            <TextBlock Name="ScoreText" Canvas.Left="8" Canvas.Top="8" FontSize="18" Foreground="White" />
+            <TextBlock Name="LivesText" Canvas.Right="8" Canvas.Top="8" FontSize="18" Foreground="White" />
+        </Canvas>
+    </Grid>
+</Window>
