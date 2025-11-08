@@ -94,7 +94,7 @@ namespace WpfGame
             var campaignButton = new Button()
             {
                 Content = "Кампания",
-                Width = 150,
+                Width = 160,
                 Height = 40,
                 FontSize = 16,
                 Background = new SolidColorBrush(Color.FromRgb(0, 100, 200)),
@@ -110,7 +110,7 @@ namespace WpfGame
             var infiniteButton = new Button()
             {
                 Content = "Бесконечный режим",
-                Width = 150,
+                Width = 160,
                 Height = 40,
                 FontSize = 16,
                 Background = new SolidColorBrush(Color.FromRgb(200, 100, 0)),
@@ -126,7 +126,7 @@ namespace WpfGame
             var exitButton = new Button()
             {
                 Content = "Выход",
-                Width = 150,
+                Width = 160,
                 Height = 40,
                 FontSize = 16,
                 Background = new SolidColorBrush(Color.FromRgb(200, 60, 60)),

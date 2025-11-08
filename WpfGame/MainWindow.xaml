@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfGame"
         mc:Ignorable="d"
-        Title="Space Invaders - WPF" Height="720" Width="480" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+        Title="Space Invaders - WPF" Height="720" Width="480" ResizeMode="NoResize" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Images/mrd7stj7vtv71.png" Stretch="Fill" Opacity="0.9"/>

@@ -43,8 +43,8 @@ namespace WpfGame
             {
                 var shield = new Shield()
                 {
-                    Health = 5,
-                    MaxHealth = 5,
+                    Health = 15,
+                    MaxHealth = 15,
                     Visual = new Rectangle()
                     {
                         Width = shieldWidth,
